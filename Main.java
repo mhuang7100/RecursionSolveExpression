@@ -6,17 +6,6 @@ public class Main{
         System.out.println("What is the equation?");
         String input = getInput();
         System.out.println(solveExpression(input));
-                /* 
-        String expression = "1.2 + 5.1";
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        list = find(expression, "+");
-
-        String one = expression.substring(0, list.get(0));
-        String two = expression.substring(list.get(0) + 1, expression.length());
-        System.out.println(Double.parseDouble(one) + Double.parseDouble(two)); 
-        */
-        /*
-        */
     }
     
     // gets player input (String)
@@ -48,7 +37,6 @@ public class Main{
                 if (!expression.substring(end, expression.length()).equals("")){
                     endExpression += expression.substring(end, expression.length());
                 }
-                System.out.println(endExpression); //ts
                 return solveExpression(endExpression);
             } else if (search(expression, "^") > 0){
                 start = findStart(expression, "^");
@@ -151,8 +139,6 @@ public class Main{
 
             String one = expression.substring(0, list.get(0));
             String two = expression.substring(list.get(0) + 1, expression.length());
-            System.out.println(expression); //ts
-            System.out.println(one + " " + two); //ts
             return Double.parseDouble(one) + Double.parseDouble(two);
         } else if (search(expression, "-") > 0){
             ArrayList<Integer> list = new ArrayList<Integer>();
