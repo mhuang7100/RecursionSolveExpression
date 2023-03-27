@@ -3,16 +3,22 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 public class Main{
     public static void main(String[] args){
-        System.out.println("What is the equation?");
+        System.out.println("\033[2J\033[H---CALCULATOR---");
+        System.out.println("What is the equation? Say STOP to exit");
         String input = getInput();
-        System.out.println(solveExpression(input));
+        while (!input.equals("STOP")){
+            System.out.println(solveExpression(input));
+            System.out.println("--------------------");
+            input = getInput();
+        }
+        
     }
     
     // gets player input (String)
     public static String getInput(){
-        try (Scanner input = new Scanner(System.in)) {
-            return input.nextLine();
-        }
+        Scanner input = new Scanner(System.in);
+        return input.nextLine();
+        
     }
 
     public static double solveExpression(String expression){
@@ -143,9 +149,15 @@ public class Main{
         } else if (search(expression, "-") > 0){
             ArrayList<Integer> list = new ArrayList<Integer>();
             list = find(expression, "-");
-
-            String one = expression.substring(0, list.get(0));
-            String two = expression.substring(list.get(0) + 1, expression.length());
+            String one;
+            String two;
+            if (expression.substring(0, 1).equals("-")){
+                one = expression.substring(0, list.get(1));
+                two = expression.substring(list.get(1) + 1, expression.length());
+            } else {
+                one = expression.substring(0, list.get(0));
+                two = expression.substring(list.get(0) + 1, expression.length());
+            }
             return Double.parseDouble(one) - Double.parseDouble(two);
         } else if(search(expression, "^") > 0){
 
@@ -195,7 +207,9 @@ public class Main{
             if (expression.substring(i, i + 1).equals(character)){
                 end += 1;
                 // doesn't count it if the - sign is a negative sign
-                if (character.equals("-") && isSymbol(expression.substring(i - 1, i))){
+                if (character.equals("-") && i == 0){
+                    end -= 1;
+                } else if (isSymbol(expression.substring(i - 1, i))){
                     end -= 1;
                 }
             }
