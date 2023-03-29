@@ -55,7 +55,7 @@ public class Main{
                     endExpression += expression.substring(end, expression.length());
                 }
                 return solveExpression(endExpression);
-            } else if (search(expression, "*") > 0){
+            } else if (search(expression, "*") > 0 && (!(search(expression, "/") > 0) || find(expression, "*").get(0) < find(expression, "/").get(0))){
                 start = findStart(expression, "*");
                 end = findEnd(expression, "*");
 
@@ -67,7 +67,7 @@ public class Main{
                     endExpression += expression.substring(end, expression.length());
                 }
                 return solveExpression(endExpression);
-            } else if (search(expression, "/") > 0){
+            } else if (search(expression, "/") > 0 && (!(search(expression, "*") > 0) || find(expression, "/").get(0) < find(expression, "*").get(0))){
                 start = findStart(expression, "/");
                 end = findEnd(expression, "/");
                 if (!expression.substring(0, start).equals("")){
@@ -78,7 +78,7 @@ public class Main{
                     endExpression += expression.substring(end, expression.length());
                 }
                 return solveExpression(endExpression);
-            } else if (search(expression, "+") > 0){
+            } else if (search(expression, "+") > 0 && (!(search(expression, "-") > 0) || find(expression, "+").get(0) < find(expression, "-").get(0))){
                 start = findStart(expression, "+");
                 end = findEnd(expression, "+");
 
@@ -90,7 +90,7 @@ public class Main{
                     endExpression += expression.substring(end, expression.length());
                 }
                 return solveExpression(endExpression);
-            } else if (search(expression, "-") > 0){
+            } else if (search(expression, "-") > 0 && (!(search(expression, "+") > 0) || find(expression, "-").get(0) < find(expression, "+").get(0))){
                 start = findStart(expression, "-");
                 end = findEnd(expression, "-");
                 if (!expression.substring(0, start).equals("")){
@@ -131,7 +131,7 @@ public class Main{
         end += 1;
         return end;
     }
-
+    
     // solve ONE operation and returns the result
     public static double solveOperation(String expression){
         // if there are parentheses, delete them
@@ -209,7 +209,7 @@ public class Main{
                 // doesn't count it if the - sign is a negative sign
                 if (character.equals("-") && i == 0){
                     end -= 1;
-                } else if (isSymbol(expression.substring(i - 1, i))){
+                } else if (character.equals("-") && isSymbol(expression.substring(i - 1, i))){
                     end -= 1;
                 }
             }
